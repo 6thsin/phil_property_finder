@@ -2,6 +2,10 @@ exec { 'apt-get update':
     command => '/usr/bin/apt-get update'
   }
 
+exec { 'apt-get install libmysqlclient-dev':
+  command => '/usr/bin/apt-get install libmysqlclient-dev'
+}
+
 class { 'python':
   version     => 'system',
   pip         => true,
@@ -39,6 +43,20 @@ package { 'bower':
   require => Class['nodejs']
 }
 
+class { '::mysql::server':
+  root_password           => '4ebce29effd5bb012bc313da0a8be9a7',
+  remove_default_accounts => true,
+#  override_options        => $override_options
+}
+
+mysql::db { 'real_estate':
+  user     => 'real_estate',
+  password => 'real_estate',
+  host     => 'localhost',
+#  grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'CREATE'],
+}
+
 #include git
 include python
 include nodejs
+include '::mysql::server'

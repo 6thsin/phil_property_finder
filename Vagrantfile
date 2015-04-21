@@ -20,7 +20,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     }
                     install_module willdurand/nodejs
                     install_module puppetlabs-git
-                    install_module stankevich-python"
+                    install_module stankevich-python
+                    install_module puppetlabs-mysql"
   end
 
   config.vm.provision "puppet" do |puppet|
